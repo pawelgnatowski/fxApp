@@ -22,7 +22,9 @@ const getJSONfxData = async (dateStart = '2018-01-01', dateEnd = '2021-02-24', s
         console.log("file saved");
     })(console);
     const fetchData = async () => {
-        const data = await fetch(`https://api.exchangeratesapi.io/history?start_at=${dateStart}&end_at=${dateEnd}&symbols=USD,MXN`).then(response => response.json());
+        let targetURL = `https://api.exchangeratesapi.io/history?start_at=${dateStart}&end_at=${dateEnd}&symbols=USD,MXN`;
+        console.log(targetURL);
+        const data = await fetch(targetURL).then(response => response.json());
         return data;
     };
     const data = await fetchData();
@@ -45,7 +47,7 @@ const getJSONfxData = async (dateStart = '2018-01-01', dateEnd = '2021-02-24', s
 };
 function generateJSONfile() {
     let dateStart = document.getElementById('start')?.value || '2018-01-01';
-    let dateEnd = document.getElementById('start')?.value || new Date().toISOString().split('T')[0];
+    let dateEnd = document.getElementById('end')?.value || new Date().toISOString().split('T')[0];
     let symbols = ['USD', 'MXN'];
     getJSONfxData(dateStart, dateEnd, symbols);
 }
